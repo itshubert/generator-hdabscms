@@ -253,6 +253,19 @@ gulp.task('watch', function () {
 
 });
 
+gulp.task("clean", function () {
+    return del([
+        assetsCms + "js/**/*",
+        assetSrc + "css/**/*",
+        paths.dest.css,
+        paths.dest.libCss,
+        paths.dest.libJs,
+        paths.dest.images,
+        paths.dest.fonts
+    ]);
+});
+
+
 /*** CMS ***/
 gulp.task('fontsCms', function (cb) {
     gulp.src(paths.srcCms.fonts)
@@ -320,7 +333,7 @@ gulp.task("libCssCms", function () {
 gulp.task('sassCms', function (cb) {
     gulp.src(paths.srcCms.sass)
     .pipe(compass({
-        config_file: './config.rb',
+        config_file: './cmsconfig.rb',
         css: paths.destCms.sass,
         sass: paths.srcCms.sass,
         showStack: true
@@ -376,19 +389,18 @@ gulp.task('watchCms', function () {
 
 });
 
-
-
-gulp.task("clean", function () {
+gulp.task("cleanCms", function () {
     return del([
         assets + "js/**/*",
-        assetSrc + "css/**/*",
-        paths.dest.css,
-        paths.dest.libCss,
-        paths.dest.libJs,
-        paths.dest.images,
-        paths.dest.fonts
+        assetCmsSrc + "css/**/*",
+        paths.destCms.css,
+        paths.destCms.libCss,
+        paths.destCms.libJs,
+        paths.destCms.images,
+        paths.destCms.fonts
     ]);
 });
+
 
 
 //var build = ["fonts", "sass", "libCss", "css", "libJs", "js", "angLibJs", "appJs", "appTemplates"];
