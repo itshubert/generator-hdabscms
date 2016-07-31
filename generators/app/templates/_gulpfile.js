@@ -20,17 +20,31 @@ var gulp = require("gulp"),
 var webroot = "./";
 var bowerPath = "./bower_components/"
 var assets = "./assets/build/";
+var assetsCms = "./assetsCms/build/";
 var assetSrc = "./assets/src/";
-var cmsAssetSrc = "./assets/cmssrc/"
+var assetCmsSrc = "./assetsCms/src/";
 
 var paths = {
-    srcFE: {
+    src: {
         libJs: [
             bowerPath + "jquery/dist/jquery.min.js",
             bowerPath + "bootstrap/dist/js/bootstrap.min.js",
             bowerPath + "underscore/underscore.js"
         ],
         js: assetSrc + "js/theme/**/*.js",
+        angLibJs: [
+            bowerPath + "angular/angular.js",
+            bowerPath + "angular-route/angular-route.js",
+            bowerPath + "textAngular/dist/textAngular-sanitize.min.js",
+            bowerPath + "angular-resource/angular-resource.js",
+            bowerPath + "angular-ui-router/release/angular-ui-router.js",
+            bowerPath + "angular-animate/angular-animate.js",
+            bowerPath + "angular-messages/angular-messages.js",
+            bowerPath + "angular-aria/angular-aria.js",
+            bowerPath + "textAngular/dist/textAngular-rangy.min.js",
+            bowerPath + "textAngular/dist/textAngularSetup.js",
+            bowerPath + "textAngular/dist/textAngular.min.js"
+        ],
         appJs: assetSrc + "js/app/**/*.js",
         appTemplates: assetSrc + "js/app/templates/**/*.html",
         sass: assetSrc + "sass",
@@ -49,54 +63,12 @@ var paths = {
         fonts: [
 			assetSrc + 'fonts/**/*.*',
             bowerPath + 'font-awesome/fonts/**/*.*'
-        ]
+        ],
     },
-    srcCMS: {
-        libJs: [
-            bowerPath + "jquery/dist/jquery.min.js",
-            bowerPath + "bootstrap/dist/js/bootstrap.min.js",
-            bowerPath + "underscore/underscore.js"
-        ],
-        js: cmsAssetSrc + "js/theme/**/*.js",
-        appJs: cmsAssetSrc + "js/app/**/*.js",
-        appTemplates: cmsAssetSrc + "js/app/templates/**/*.html",
-        sass: cmsAssetSrc + "sass",
-        css: cmsAssetSrc + "css/**/*.css",
-        libCss: [
-            bowerPath + "bootstrap/dist/css/bootstrap.min.css",
-            bowerPath + "font-awesome/css/font-awesome.css",
-            bowerPath + "textAngular/dist/textAngular.css"
-        ],
-        images: [
-			cmsAssetSrc + 'images/**/*.jpg',
-            cmsAssetSrc + 'images/**/*.gif',
-			cmsAssetSrc + 'images/**/*.png',
-            cmsAssetSrc + 'images/**/*.svg'
-        ],
-        fonts: [
-			cmsAssetSrc + 'fonts/**/*.*'
-        ]
-    },
-    angLibJs: [
-        bowerPath + "angular/angular.js",
-        bowerPath + "angular-route/angular-route.js",
-        bowerPath + "textAngular/dist/textAngular-sanitize.min.js",
-        //bowerPath + "angular-sanitize/angular-sanitize.js",
-        bowerPath + "angular-resource/angular-resource.js",
-        bowerPath + "angular-ui-router/release/angular-ui-router.js",
-        bowerPath + "angular-animate/angular-animate.js",
-        bowerPath + "angular-messages/angular-messages.js",
-        bowerPath + "angular-aria/angular-aria.js",
-        bowerPath + "textAngular/dist/textAngular-rangy.min.js",
-        bowerPath + "textAngular/dist/textAngularSetup.js",
-        bowerPath + "textAngular/dist/textAngular.min.js"
-    ],
     dest: {
-        angLibJs: assets + "js/anglib.min.js",
-    },
-    destFE: {
         libJs: assets + "js/libs.min.js",
-        js: assets + "js/fe.min.js",
+        js: assets + "js/scripts.min.js",
+        angLibJs: assets + "js/anglib.min.js",
         appJs: assets + "js/app.min.js",
         appTemplates: assets + "js",
         sass: assetSrc + "css",
@@ -105,86 +77,129 @@ var paths = {
         images: assets + "images/",
         fonts: assets + "fonts/"
     },
-    destCMS: {
-        libJs: assets + "js/cmslibs.min.js",
-        js: assets + "js/cms.min.js",
-        appJs: assets + "js/cmsapp.min.js",
-        appTemplates: assets + "js",
-        sass: assetSrc + "cmscss",
-        libCss: assets + "css/cmslibs.min.css",
-        css: assets + "css/cmsstyles.min.css",
-        images: assets + "images/",
-        fonts: assets + "fonts/"
+    srcCms: {
+        libJs: [
+            bowerPath + "jquery/dist/jquery.min.js",
+            bowerPath + "bootstrap/dist/js/bootstrap.min.js",
+            bowerPath + "underscore/underscore.js"
+        ],
+        js: assetSrc + "js/theme/**/*.js",
+        angLibJs: [
+            bowerPath + "angular/angular.js",
+            bowerPath + "angular-route/angular-route.js",
+            bowerPath + "textAngular/dist/textAngular-sanitize.min.js",
+            bowerPath + "angular-resource/angular-resource.js",
+            bowerPath + "angular-ui-router/release/angular-ui-router.js",
+            bowerPath + "angular-animate/angular-animate.js",
+            bowerPath + "angular-messages/angular-messages.js",
+            bowerPath + "angular-aria/angular-aria.js",
+            bowerPath + "textAngular/dist/textAngular-rangy.min.js",
+            bowerPath + "textAngular/dist/textAngularSetup.js",
+            bowerPath + "textAngular/dist/textAngular.min.js"
+        ],
+        appJs: assetCmsSrc + "js/app/**/*.js",
+        appTemplates: assetCmsSrc + "js/app/templates/**/*.html",
+        sass: assetCmsSrc + "sass",
+        css: assetCmsSrc + "css/**/*.css",
+        libCss: [
+            bowerPath + "bootstrap/dist/css/bootstrap.min.css",
+            bowerPath + "font-awesome/css/font-awesome.css",
+            bowerPath + "textAngular/dist/textAngular.css"
+        ],
+        images: [
+			assetCmsSrc + 'images/**/*.jpg',
+            assetCmsSrc + 'images/**/*.gif',
+			assetCmsSrc + 'images/**/*.png',
+            assetCmsSrc + 'images/**/*.svg'
+        ],
+        fonts: [
+			assetCmsSrc + 'fonts/**/*.*',
+            bowerPath + 'font-awesome/fonts/**/*.*'
+        ],
+    },
+    destCms: {
+        libJs: assetsCms + "js/libs.min.js",
+        js: assetsCms + "js/scripts.min.js",
+        angLibJs: assetsCms + "js/anglib.min.js",
+        appJs: assetsCms + "js/app.min.js",
+        appTemplates: assetsCms + "js",
+        sass: assetCmsSrc + "css",
+        libCss: assetsCms + "css/libs.min.css",
+        css: assetsCms + "css/styles.min.css",
+        images: assetsCms + "images/",
+        fonts: assetsCms + "fonts/"
     }
 };
 
-gulp.task('feFonts', function (cb) {
-    gulp.src(paths.srcFE.fonts)
-	.pipe(gulp.dest(paths.destFE.fonts));
+/*** FRONTEND ***/
+gulp.task('fonts', function (cb) {
+    gulp.src(paths.src.fonts)
+	.pipe(gulp.dest(paths.dest.fonts));
     cb();
 });
 
-/***** FE ******/
-gulp.task("feImages", function (cb) {
-    gulp.src(paths.srcFE.images)
-    .pipe(gulp.dest(paths.destFE.images));
+gulp.task("images", function (cb) {
+    gulp.src(paths.src.images)
+    .pipe(gulp.dest(paths.dest.images));
     cb();
 });
 
-gulp.task("feLibJs", function () {
-    gulp.src(paths.srcFE.libJs)
+gulp.task("libJs", function () {
+    gulp.src(paths.src.libJs)
     .pipe(plumber())
-    .pipe(concat(paths.destFE.libJs))
+    .pipe(concat(paths.dest.libJs))
     .pipe(ifElse(env === 'production', uglify))
     .pipe(gulp.dest("."));
 });
 
-gulp.task("feJs", function () {
-    gulp.src(paths.srcFE.js)
+gulp.task("js", function () {
+    gulp.src(paths.src.js)
     .pipe(plumber())
-    .pipe(concat(paths.destFE.js))
+    .pipe(concat(paths.dest.js))
     .pipe(ifElse(env === 'production', uglify))
     .pipe(gulp.dest("."));
 });
 
 gulp.task("angLibJs", function () {
-    gulp.src(paths.angLibJs)
+    gulp.src(paths.src.angLibJs)
     .pipe(plumber())
     .pipe(concat(paths.dest.angLibJs))
     .pipe(ifElse(env === 'production', uglify))
     .pipe(gulp.dest("."));
 });
 
-gulp.task("feAppJs", function () {
-    gulp.src(paths.srcFE.appJs)
+gulp.task("appJs", function () {
+    gulp.src(paths.src.appJs)
     .pipe(plumber())
-    .pipe(concat(paths.destFE.appJs))
+    .pipe(concat(paths.dest.appJs))
     .pipe(ifElse(env === 'production', uglify))
     .pipe(gulp.dest("."));
 });
 
-gulp.task("feAppTemplates", function () {
-    gulp.src(paths.srcFE.appTemplates)
+gulp.task("appTemplates", function () {
+    gulp.src(paths.src.appTemplates)
     .pipe(htmlmin({ collapseWhitespace: true }))
     .pipe(ngHtml2Js({ moduleName: 'appTemplates' }))
     .pipe(concat("appTemplates.min.js"))
-    .pipe(gulp.dest(paths.destFE.appTemplates));
+    //.pipe(debug());
+    .pipe(gulp.dest(paths.dest.appTemplates));
+    //.pipe(ifElse(env === 'production', htmlmin))
 });
 
-gulp.task("feLibCss", function () {
-    gulp.src(paths.srcFE.libCss)
+gulp.task("libCss", function () {
+    gulp.src(paths.src.libCss)
     .pipe(plumber())
     .pipe(ifElse(env === 'production', cssmin))
-    .pipe(concat(paths.destFE.libCss))
+    .pipe(concat(paths.dest.libCss))
     .pipe(gulp.dest("."));
 });
 
-gulp.task('feSass', function (cb) {
-    gulp.src(paths.srcFE.sass)
+gulp.task('sass', function (cb) {
+    gulp.src(paths.src.sass)
     .pipe(compass({
         config_file: './config.rb',
-        css: paths.destFE.sass,
-        sass: paths.srcFE.sass,
+        css: paths.dest.sass,
+        sass: paths.src.sass,
         showStack: true
     }))
     .on('error', function (error) {
@@ -196,146 +211,219 @@ gulp.task('feSass', function (cb) {
     cb();
 });
 
-gulp.task("feCss", function () {
+gulp.task("css", function () {
     console.log('env == ' + env);
-    gulp.src(paths.srcFE.css)
+    gulp.src(paths.src.css)
     .pipe(plumber())
     .pipe(ifElse(env === 'production', cssmin))
-    .pipe(concat(paths.destFE.css))
+    .pipe(concat(paths.dest.css))
     .pipe(gulp.dest("."));
 });
-
-/***** CMS ******/
-gulp.task("cmsImages", function (cb) {
-    gulp.src(paths.srcCMS.images)
-    .pipe(gulp.dest(paths.destCMS.images));
-    cb();
-});
-
-gulp.task("cmsLibJs", function () {
-    gulp.src(paths.srcCMS.libJs)
-    .pipe(plumber())
-    .pipe(concat(paths.destCMS.libJs))
-    .pipe(ifElse(env === 'production', uglify))
-    .pipe(gulp.dest("."));
-});
-
-gulp.task("cmsJs", function () {
-    gulp.src(paths.srcCMS.js)
-    .pipe(plumber())
-    .pipe(concat(paths.destCMS.js))
-    .pipe(ifElse(env === 'production', uglify))
-    .pipe(gulp.dest("."));
-});
-
-gulp.task("cmsAppJs", function () {
-    gulp.src(paths.srcCMS.appJs)
-    .pipe(plumber())
-    .pipe(concat(paths.destCMS.appJs))
-    .pipe(ifElse(env === 'production', uglify))
-    .pipe(gulp.dest("."));
-});
-
-gulp.task("cmsAppTemplates", function () {
-    gulp.src(paths.srcCMS.appTemplates)
-    .pipe(htmlmin({ collapseWhitespace: true }))
-    .pipe(ngHtml2Js({ moduleName: 'appTemplates' }))
-    .pipe(concat("cmsappTemplates.min.js"))
-    .pipe(gulp.dest(paths.destCMS.appTemplates));
-});
-
-gulp.task("cmsLibCss", function () {
-    gulp.src(paths.srcCMS.libCss)
-    .pipe(plumber())
-    .pipe(ifElse(env === 'production', cssmin))
-    .pipe(concat(paths.destCMS.libCss))
-    .pipe(gulp.dest("."));
-});
-
-gulp.task('cmsSass', function (cb) {
-    gulp.src(paths.srcCMS.sass)
-    .pipe(compass({
-        config_file: './cmsconfig.rb',
-        css: paths.destCMS.sass,
-        sass: paths.srcCMS.sass,
-        showStack: true
-    }))
-    .on('error', function (error) {
-        // Would like to catch the error here
-        console.log(error);
-        this.emit('end');
-    });
-    //.pipe(gulp.dest(paths.dest.cmsSass));
-    cb();
-});
-
-gulp.task("cmsCss", function () {
-    console.log('env == ' + env);
-    gulp.src(paths.srccmssrc.css)
-    .pipe(plumber())
-    .pipe(ifElse(env === 'production', cssmin))
-    .pipe(concat(paths.destcmssrc.css))
-    .pipe(gulp.dest("."));
-});
-
-
-gulp.task("clean", function () {
-    return del([
-        assets + "js/**/*",
-        assetSrc + "css/**/*",
-        paths.destFE.css,
-        paths.destFE.libCss,
-        paths.destFE.libJs,
-        paths.destFE.images,
-        paths.destFE.fonts,
-        paths.destCMS.css,
-        paths.destCMS.libCss,
-        paths.destCMS.libJs,
-        paths.destCMS.images,
-        paths.destCMS.fonts
-    ]);
-});
-
 
 gulp.task('watch', function () {
     console.log("Watching for changes...");
 
-    watch(paths.srcFE.sass + '/**/*.scss', function () {
+    watch(paths.src.sass + '/**/*.scss', function () {
         runSequence(["sass", "css"]);
     });
-    watch(paths.srcFE.libCss, function () {
+    watch(paths.src.libCss, function () {
         gulp.start("libCss");
     });
-    watch(paths.srcFE.css, function () {
+    watch(paths.src.css, function () {
         gulp.start("css");
     });
-    watch(paths.srcFE.libJs, function () {
+    watch(paths.src.libJs, function () {
         gulp.start("libJs");
     });
-    watch(paths.srcFE.js, function () {
+    watch(paths.src.js, function () {
         gulp.start("js");
     });
-    watch(paths.srcFE.appJs, function () {
+    watch(paths.src.appJs, function () {
         gulp.start("appJs");
     });
-    watch(paths.srcFE.images, function () {
+    watch(paths.src.images, function () {
         gulp.start("images");
     });
-    watch(paths.srcFE.fonts, function () {
+    watch(paths.src.fonts, function () {
         gulp.start("fonts");
     });
-    watch(paths.srcFE.appTemplates, function () {
+    watch(paths.src.appTemplates, function () {
         gulp.start("appTemplates");
     });
 
 });
 
+gulp.task("clean", function () {
+    return del([
+        assetsCms + "js/**/*",
+        assetSrc + "css/**/*",
+        paths.dest.css,
+        paths.dest.libCss,
+        paths.dest.libJs,
+        paths.dest.images,
+        paths.dest.fonts
+    ]);
+});
 
-var buildFE = ["feImages", "feFonts", "feSass", "feLibCss", "feCss", "feLibJs", "feJs", "angLibJs", "feAppJs", "feAppTemplates"];
-gulp.task("default", function () {
+
+/*** CMS ***/
+gulp.task('fontsCms', function (cb) {
+    gulp.src(paths.srcCms.fonts)
+	.pipe(gulp.dest(paths.destCms.fonts));
+    cb();
+});
+
+gulp.task("imagesCms", function (cb) {
+    gulp.src(paths.srcCms.images)
+    .pipe(gulp.dest(paths.destCms.images));
+    cb();
+});
+
+
+gulp.task("libJsCms", function () {
+    gulp.src(paths.srcCms.libJs)
+    .pipe(plumber())
+    .pipe(concat(paths.destCms.libJs))
+    .pipe(ifElse(env === 'production', uglify))
+    .pipe(gulp.dest("."));
+});
+
+gulp.task("jsCms", function () {
+    gulp.src(paths.srcCms.js)
+    .pipe(plumber())
+    .pipe(concat(paths.destCms.js))
+    .pipe(ifElse(env === 'production', uglify))
+    .pipe(gulp.dest("."));
+});
+
+gulp.task("angLibJsCms", function () {
+    gulp.src(paths.srcCms.angLibJs)
+    .pipe(plumber())
+    .pipe(concat(paths.destCms.angLibJs))
+    .pipe(ifElse(env === 'production', uglify))
+    .pipe(gulp.dest("."));
+});
+
+gulp.task("appJsCms", function () {
+    gulp.src(paths.srcCms.appJs)
+    .pipe(plumber())
+    .pipe(concat(paths.destCms.appJs))
+    .pipe(ifElse(env === 'production', uglify))
+    .pipe(gulp.dest("."));
+});
+
+gulp.task("appTemplatesCms", function () {
+    gulp.src(paths.srcCms.appTemplates)
+    .pipe(htmlmin({ collapseWhitespace: true }))
+    .pipe(ngHtml2Js({ moduleName: 'appTemplates' }))
+    .pipe(concat("appTemplates.min.js"))
+    //.pipe(debug());
+    .pipe(gulp.dest(paths.destCms.appTemplates));
+    //.pipe(ifElse(env === 'production', htmlmin))
+});
+
+gulp.task("libCssCms", function () {
+    gulp.src(paths.srcCms.libCss)
+    .pipe(plumber())
+    .pipe(ifElse(env === 'production', cssmin))
+    .pipe(concat(paths.destCms.libCss))
+    .pipe(gulp.dest("."));
+});
+
+gulp.task('sassCms', function (cb) {
+    gulp.src(paths.srcCms.sass)
+    .pipe(compass({
+        config_file: './cmsconfig.rb',
+        css: paths.destCms.sass,
+        sass: paths.srcCms.sass,
+        showStack: true
+    }))
+    .on('error', function (error) {
+        // Would like to catch the error here
+        console.log(error);
+        this.emit('end');
+    });
+    //.pipe(gulp.dest(paths.destCms.cmsSass));
+    cb();
+});
+
+gulp.task("cssCms", function () {
+    console.log('env == ' + env);
+    gulp.src(paths.srcCms.css)
+    .pipe(plumber())
+    .pipe(ifElse(env === 'production', cssmin))
+    .pipe(concat(paths.destCms.css))
+    .pipe(gulp.dest("."));
+});
+
+gulp.task('watchCms', function () {
+    console.log("Watching for changes...");
+
+    watch(paths.srcCms.sass + '/**/*.scss', function () {
+        runSequence(["sassCms"]);
+    });
+    watch(paths.srcCms.libCss, function () {
+        gulp.start("libCssCms");
+    });
+    watch(paths.srcCms.css, function () {
+        gulp.start("cssCms");
+    });
+    watch(paths.srcCms.libJs, function () {
+        gulp.start("libJsCms");
+    });
+    watch(paths.srcCms.js, function () {
+        gulp.start("jsCms");
+    });
+    watch(paths.srcCms.appJs, function () {
+        gulp.start("appJsCms");
+    });
+    watch(paths.srcCms.images, function () {
+        gulp.start("imagesCms");
+    });
+    watch(paths.srcCms.fonts, function () {
+        gulp.start("fontsCms");
+    });
+    watch(paths.srcCms.appTemplates, function () {
+        gulp.start("appTemplatesCms");
+    });
+
+});
+
+gulp.task("cleanCms", function () {
+    return del([
+        assets + "js/**/*",
+        assetCmsSrc + "css/**/*",
+        paths.destCms.css,
+        paths.destCms.libCss,
+        paths.destCms.libJs,
+        paths.destCms.images,
+        paths.destCms.fonts
+    ]);
+});
+
+
+
+//var build = ["fonts", "sass", "libCss", "css", "libJs", "js", "angLibJs", "appJs", "appTemplates"];
+
+var build = ["images", "fonts", "sass", "libCss", "css", "libJs", "js", "angLibJs", "appJs", "appTemplates"];
+gulp.task("dev", function () {
     env = "development";
     runSequence(build);
     //runSequence("watch");
     gulp.start("watch");
 });
 
+var buildCms = ["imagesCms", "fontsCms", "sassCms", "libCssCms", "cssCms", "libJsCms", "jsCms", "angLibJsCms", "appJsCms", "appTemplatesCms"];
+gulp.task("devcms", function () {
+    env = "development";
+    runSequence(buildCms);
+    //runSequence("watch");
+    gulp.start("watchCms");
+});
+
+gulp.task("default", function () {
+    env = "development";
+    runSequence(build);
+    //runSequence("watch");
+    gulp.start("watch");
+});
